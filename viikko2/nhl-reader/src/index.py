@@ -1,8 +1,12 @@
-import requests
-from player import Player
 from rich.console import Console
 from rich.table import Table
+import requests
+from player import Player
+
 console = Console()
+
+
+
 def main():
     season = input("Season: ")
     nationality = input("Nationality: ").upper()
@@ -12,6 +16,10 @@ def main():
     stats = PlayerStats(reader)
     players=stats.top_scorers_by_nationality(nationality)
 
+    table = create_table(players, season, nationality)
+    console.print(table)
+
+def create_table(players, season, nationality):
     table = Table(title=f"Season {season} players from {nationality}")
 
     table.add_column("Released", justify="left", style="cyan", no_wrap=True)
@@ -23,14 +31,14 @@ def main():
     for player in players:
         total = player.goals + player.assists
         table.add_row(player.name, player.team, str(player.goals), str(player.assists), str(total))
-    console.print(table)
+    return table
 
 class PlayerReader:
     def __init__(self, url):
         self._url = url
 
     def get_players(self):
-        response = requests.get(self._url).json()
+        response = requests.get(self._url, timeout=10).json()
         players = [Player(player_dict) for player_dict in response]
         return players
 
