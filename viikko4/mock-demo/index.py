@@ -10,7 +10,7 @@ def main():
 
     kumpula_bier_shop.aloita_ostokset()
     kumpula_bier_shop.lisaa_ostos(10)
-    kumpula_bier_shop.lisaa_ostos(9)
+    kumpula_bier_shop.lisaa_ostos(7)
     kumpula_bier_shop.maksa("1234-1234")
 
     kumpula_bier_shop.aloita_ostokset()
